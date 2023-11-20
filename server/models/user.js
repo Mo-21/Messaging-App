@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 const { escape } = require("validator");
+const jwt = require("jsonwebtoken");
 
 const Schema = mongoose.Schema;
 
@@ -32,6 +33,10 @@ const userSchema = new Schema({
     maxLength: 5000,
     default: "",
   },
+  isAdmin: {
+    type: "Boolean",
+    default: false,
+  },
 });
 
 //When Signing up
@@ -47,6 +52,7 @@ function validateNewUser(user) {
       .messages({ "any.only": "{{#label}} does not match the password" }),
     profilePic: Joi.string(),
     bio: Joi.string().trim().max(5000),
+    isAdmin: Joi.boolean(),
   });
 
   return schema.validate(user);
@@ -67,6 +73,14 @@ function sanitizeInput(data) {
     email: escape(data.email),
   };
 }
+
+userSchema.methods.generateAccessToken = function () {
+  const token = jwt.sign(
+    { _id: this._id, isAdmin: this.isAdmin },
+    process.env.ACCESS_KEY
+  );
+  return token;
+};
 
 const User = mongoose.model("User", userSchema);
 
