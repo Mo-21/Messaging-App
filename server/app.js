@@ -7,6 +7,8 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const passport = require("passport");
+require("./middlewares/passport-config")(passport);
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
@@ -22,6 +24,7 @@ db.once("open", () => console.log("Connected To Mongoose"));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
+app.use(passport.initialize());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
