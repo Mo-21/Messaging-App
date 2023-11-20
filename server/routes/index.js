@@ -8,7 +8,7 @@ const authenticate_refresh_token = require("../middlewares/authenticateRefreshTo
 
 const users_controller = require("../controllers/users");
 
-router.post("/", users_controller.sign_in);
+router.post("/", passport.authenticate("local"), users_controller.sign_in);
 router.post("/register", users_controller.sign_up);
 router.post("/logout", users_controller.log_out);
 
