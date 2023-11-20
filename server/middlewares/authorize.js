@@ -1,18 +1,28 @@
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
+const User = require("../models/user");
 
 const authorize = asyncHandler(async (req, res, next) => {
-  const token = req.header("x-auth-token");
+  let token;
 
-  if (!token) return res.status(401).send("Forbidden");
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    try {
+      //Get token from header
+      token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.ACCESS_KEY);
 
-  try {
-    const decoded = jwt.verify(token, process.env.ACCESS_KEY);
-    req.user = decoded;
-    next();
-  } catch (ex) {
-    res.status(400).send("Something went wrong");
+      //Get the user from the token
+      req.user = decoded;
+      next();
+    } catch (err) {
+      res.status(401).json(err);
+    }
   }
+
+  if (!token) res.status(401).json("Not Authorized!");
 });
 
 module.exports = authorize;

@@ -20,20 +20,19 @@ exports.sign_in = asyncHandler(async (req, res, next) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user)
       res.status(400).send("Incorrect Email, please try a correct one");
-    //generating json web token
-    const token = user.generateAccessToken();
     //checking the hashed password
     const validPassword = await bcrypt.compare(
       req.body.password,
       user.password
     );
-
     if (!validPassword)
       res.status(400).send("Incorrect Password, please try again");
-
-    res
-      .header("x-auth-token", token)
-      .send(_.pick(user, ["_id", "email", "username", "isAdmin"]));
+    //generating json web token
+    const token = user.generateAccessToken();
+    res.status(200).json({
+      token: token,
+      userDetails: _.pick(user, ["_id", "email", "username", "isAdmin"]),
+    });
   }
 });
 
@@ -62,7 +61,7 @@ exports.sign_up = asyncHandler(async (req, res, next) => {
 
 exports.get_user_details = asyncHandler(async (req, res, next) => {
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user._id).select("-password");
     if (!user) res.status(404).json("User not found");
     res.status(200).json("Hello There... Welcome to my profile");
   } catch (ex) {
