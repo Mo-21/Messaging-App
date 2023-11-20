@@ -37,6 +37,10 @@ const userSchema = new Schema({
     type: "Boolean",
     default: false,
   },
+  refreshToken: {
+    type: "String",
+    default: "",
+  },
 });
 
 //When Signing up
@@ -77,7 +81,21 @@ function sanitizeInput(data) {
 userSchema.methods.generateAccessToken = function () {
   const token = jwt.sign(
     { _id: this._id, isAdmin: this.isAdmin },
-    process.env.ACCESS_KEY
+    process.env.ACCESS_KEY,
+    {
+      expiresIn: "15m",
+    }
+  );
+  return token;
+};
+
+userSchema.methods.generateRefreshToken = function () {
+  const token = jwt.sign(
+    { _id: this._id, isAdmin: this.isAdmin },
+    process.env.REFRESH_TOKEN,
+    {
+      expiresIn: "1h",
+    }
   );
   return token;
 };
