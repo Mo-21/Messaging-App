@@ -34,28 +34,45 @@ const userSchema = new Schema({
   },
 });
 
-function validateUser(user) {
-  const schema = {
-    username: Joi.string().max(50).min(5).required(),
+//When Signing up
+function validateNewUser(user) {
+  const schema = Joi.object({
+    username: Joi.string().max(50).min(5).trim().required(),
     email: Joi.string().email().max(1024).min(5).required(),
-    password: Joi.string().min(5).max(255).required(),
+    password: Joi.string().min(5).max(255).trim().required(),
+    passwordConfirmation: Joi.string()
+      .valid(Joi.ref("password"))
+      .required()
+      .label("Password confirmation")
+      .messages({ "any.only": "{{#label}} does not match the password" }),
     profilePic: Joi.string(),
-    bio: Joi.string().max(5000),
-  };
+    bio: Joi.string().trim().max(5000),
+  });
 
-  return Joi.validate(user, schema);
+  return schema.validate(user);
+}
+
+//When Signing in
+function validateRegisteredUser(user) {
+  const schema = Joi.object({
+    email: Joi.string().email().max(1024).min(5).required(),
+    password: Joi.string().min(5).max(255).trim().required(),
+  });
+
+  return schema.validate(user);
 }
 
 function sanitizeInput(data) {
   return {
-    username: escape(data.username),
     email: escape(data.email),
-    password: escape(data.password),
-    profilePic: escape(data.profilePic),
-    bio: escape(data.bio),
   };
 }
 
-module.exports = mongoose.model("User", userSchema);
-exports.validate = validateUser;
-exports.sanitize = sanitizeInput;
+const User = mongoose.model("User", userSchema);
+
+module.exports = {
+  User,
+  sanitizeInput,
+  validateNewUser,
+  validateRegisteredUser,
+};
