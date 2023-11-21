@@ -1,0 +1,34 @@
+@font-face {
+  font-family: Holiday;
+  src: url(./FunnyDays.otf);
+}
+
+html {
+  height: 100vh;
+  --logo-font: Holiday;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  display: flex;
+  width: 100%;
+  background-color: #15c757;
+  font-family: var(--logo-font);
+}
+
+.navbar .logo {
+  width: 70px;
+  background-color: white;
+}
+
+.navbar .brand {
+  font-size: 4rem;
+  margin: 0 auto;
+  letter-spacing: 2px;
+  color: white;
+}

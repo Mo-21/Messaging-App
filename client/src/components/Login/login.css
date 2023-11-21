@@ -1,0 +1,102 @@
+@font-face {
+  font-family: Holiday;
+  src: url(./FunnyDays.otf);
+}
+
+#root {
+  background-color: #f9f9fa;
+  height: 100%;
+}
+
+.login-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.second-login-container {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+img.logo {
+  max-width: 350px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 25px;
+}
+
+.title {
+  font-size: 4em;
+  letter-spacing: 3px;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  border-radius: 25px;
+  padding: 10px 25px;
+  font-family: Holiday;
+  font-weight: 500;
+  max-height: 750px;
+  text-align: center;
+  color: white;
+  background-color: #00a884;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+form {
+  display: grid;
+  grid-template-rows: repeat(1, 100px);
+  justify-self: center;
+}
+
+.email-field {
+  grid-row: 1/2;
+}
+
+.password-field {
+  grid-row: 2/3;
+}
+
+.email-field,
+.password-field {
+  display: grid;
+  grid-template-columns: repeat(1, max(150px) 200px);
+  grid-template-rows: repeat(1, 50px);
+  gap: 20px;
+  align-items: center;
+}
+
+label {
+  text-align: right !important;
+  font-size: 2rem;
+}
+
+input {
+  border-radius: 5px;
+  border: 2px solid black;
+  height: 30px;
+  background-color: rgb(230, 222, 222);
+}
+
+.email-field label {
+  grid-column: 1/2;
+}
+
+.email-field input {
+  grid-column: 2/3;
+}
+
+.password-field label {
+  grid-column: 1/2;
+}
+
+.password-field input {
+  grid-column: 2/3;
+}

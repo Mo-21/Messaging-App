@@ -1,0 +1,20 @@
+.dashboard {
+  display: grid;
+  grid-template-columns: minmax(100px, 300px) minmax(300px, 1fr);
+  font-size: 2rem;
+}
+
+.empty-space {
+  grid-column: 2/3;
+  background-color: #f0f2f5;
+}
+
+.contact-list-title {
+  background-color: #53bdeb;
+}
+
+.contact-list {
+  grid-column: 1/2;
+  background-color: white;
+  border-right: 2px solid white;
+}

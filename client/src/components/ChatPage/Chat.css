@@ -1,0 +1,22 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.recipient-info {
+  display: grid;
+  grid-template-columns: minmax(50px, 100px) minmax(300px, 1fr);
+  gap: 20px;
+  background-color: #f0f2f5;
+}
+
+.chat-content {
+  background-color: #f1ede6;
+}
+
+.message-input {
+  background-color: #f0f2f5;
+}
