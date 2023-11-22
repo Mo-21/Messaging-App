@@ -8,7 +8,7 @@ const {
   validateNewUser,
   sanitizeInput,
   validateRegisteredUser,
-} = require("../models/user");
+} = require("../models/User");
 
 exports.sign_in = asyncHandler(async (req, res, next) => {
   sanitizeInput(req.body);
@@ -29,11 +29,9 @@ exports.sign_in = asyncHandler(async (req, res, next) => {
       res.status(400).send("Incorrect Password, please try again");
     //generating json web token
     const accessToken = user.generateAccessToken();
-    let refreshToken = user.generateRefreshToken();
 
     res.status(200).json({
       accessToken: accessToken,
-      refreshToken: refreshToken,
       userDetails: _.pick(user, ["_id", "email", "username", "isAdmin"]),
     });
   }
@@ -51,7 +49,6 @@ exports.sign_up = asyncHandler(async (req, res, next) => {
     );
     //generating json web token
     const accessToken = user.generateAccessToken();
-    let refreshToken = user.generateRefreshToken();
     //hashing the password
     const saltForPassword = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(user.password, saltForPassword);
@@ -59,7 +56,6 @@ exports.sign_up = asyncHandler(async (req, res, next) => {
 
     res.status(200).json({
       accessToken: accessToken,
-      refreshToken: refreshToken,
       userDetails: _.pick(user, ["_id", "email", "username", "isAdmin"]),
     });
   }
@@ -76,12 +72,11 @@ exports.get_user_details = asyncHandler(async (req, res, next) => {
 });
 
 exports.log_out = asyncHandler(async (req, res, next) => {
-  const { refreshToken } = req.body;
-  const user = users.find((u) => u.refreshToken === refreshToken);
-  if (!user) {
-    return res.status(400).json({ message: "Invalid refresh token" });
+  let accessToken = req.headers.authorization.split(" ")[1];
+  if (!accessToken) {
+    return res.status(400).json({ message: "Invalid access token" });
   }
-  user.refreshToken = null;
+  accessToken = null;
   res.json({ message: "User logged out successfully" });
 });
 
