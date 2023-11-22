@@ -14,9 +14,19 @@ const messageSchema = new Schema({
     ref: "User",
     required: true,
   },
-  recipient: Schema.Types.ObjectId,
-  ref: "User",
-  required: true,
+  recipient: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  date: {
+    type: "Date",
+    default: Date.now(),
+  },
+});
+
+messageSchema.virtual("url").get(function () {
+  return `${this.id}`;
 });
 
 function validateMessage(message) {

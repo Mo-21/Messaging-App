@@ -89,6 +89,8 @@ userSchema.methods.generateAccessToken = function () {
   return token;
 };
 
+//Refresh Token is suspended.
+//The code is left here for future implementation
 userSchema.methods.generateRefreshToken = function () {
   const token = jwt.sign(
     { _id: this._id, isAdmin: this.isAdmin },
