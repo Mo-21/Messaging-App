@@ -32,3 +32,12 @@ body {
   letter-spacing: 2px;
   color: white;
 }
+
+.username,
+.logout {
+  font-size: 3rem;
+  letter-spacing: 2px;
+  color: white;
+  align-self: center;
+  margin-left: 10px;
+}

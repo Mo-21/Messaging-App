@@ -50,12 +50,6 @@ img.logo {
   letter-spacing: 1px;
 }
 
-form {
-  display: grid;
-  grid-template-rows: repeat(1, 100px);
-  justify-self: center;
-}
-
 .email-field {
   grid-row: 1/2;
 }
@@ -64,13 +58,30 @@ form {
   grid-row: 2/3;
 }
 
+.login-button {
+  grid-row: 3/4;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  background-color: #53bdeb;
+  color: white;
+  font-weight: 500;
+  font-size: 3rem;
+  width: 200px;
+  margin-top: 10px;
+  justify-self: center;
+  font-family: Holiday;
+  letter-spacing: 2px;
+}
+
 .email-field,
 .password-field {
   display: grid;
   grid-template-columns: repeat(1, max(150px) 200px);
-  grid-template-rows: repeat(1, 50px);
+  grid-template-rows: repeat(1, 80px);
   gap: 20px;
   align-items: center;
+  justify-items: center;
 }
 
 label {
@@ -79,10 +90,11 @@ label {
 }
 
 input {
-  border-radius: 5px;
+  border-radius: 10px;
   border: 2px solid black;
-  height: 30px;
-  background-color: rgb(230, 222, 222);
+  height: 50px;
+  border: 1px solid grey;
+  padding-left: 20px;
 }
 
 .email-field label {
@@ -99,4 +111,13 @@ input {
 
 .password-field input {
   grid-column: 2/3;
+}
+
+.register-banner {
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+
+a.register-link {
+  color: white;
 }
