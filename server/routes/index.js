@@ -10,9 +10,9 @@ const users_controller = require("../controllers/users");
 const messages_controller = require("../controllers/messages");
 
 //handling user's credentials
-router.post("/", users_controller.sign_in);
+router.post("/login", users_controller.sign_in);
 router.post("/register", users_controller.sign_up);
-router.post("/logout", authorize, users_controller.log_out);
+router.get("/logout", users_controller.log_out);
 
 //handling user's actions
 router.get(

@@ -15,25 +15,38 @@ exports.sign_in = asyncHandler(async (req, res, next) => {
   const validationResult = validateRegisteredUser(req.body);
 
   if (validationResult.error) {
-    return res.status(400).send(validationResult.error.message);
+    return res.status(400).json(validationResult.error.message);
   } else {
     const user = await User.findOne({ email: req.body.email });
-    if (!user)
-      res.status(400).send("Incorrect Email, please try a correct one");
+    console.log(user);
+    if (!user) return res.status(400).json({ message: "No user found" });
+    console.log(user.password);
     //checking the hashed password
     const validPassword = await bcrypt.compare(
       req.body.password,
       user.password
     );
-    if (!validPassword)
-      res.status(400).send("Incorrect Password, please try again");
+    if (!validPassword) {
+      return res.status(400).json({
+        message: "Incorrect Password, please try again",
+      });
+    }
+    console.log("password done");
     //generating json web token
     const accessToken = user.generateAccessToken();
 
-    res.status(200).json({
-      accessToken: accessToken,
-      userDetails: _.pick(user, ["_id", "email", "username", "isAdmin"]),
-    });
+    return res
+      .status(200)
+      .cookie("jwt", accessToken, {
+        //maxAge = number of milliseconds in a time period
+        maxAge: 60 * 60 * 1000, // 3600000
+        httpOnly: true,
+        sameSite: "strict",
+        // secure: true, //we activate it in production
+      })
+      .json({
+        userDetails: _.pick(user, ["_id", "email", "username", "isAdmin"]),
+      });
   }
 });
 
@@ -72,12 +85,28 @@ exports.get_user_details = asyncHandler(async (req, res, next) => {
 });
 
 exports.log_out = asyncHandler(async (req, res, next) => {
-  let accessToken = req.headers.authorization.split(" ")[1];
-  if (!accessToken) {
+  // let accessToken1 = req.headers.authorization.split(" ")[1];
+  if (req.cookies.jwt === null) {
     return res.status(400).json({ message: "Invalid access token" });
   }
-  accessToken = null;
-  res.json({ message: "User logged out successfully" });
+  let accessToken2 = req.cookies.jwt;
+
+  // console.log(accessToken1);
+  console.log(accessToken2);
+  if (!accessToken2) {
+    return res.status(400).json({ message: "Invalid access token" });
+  }
+  accessToken2 = null;
+  console.log(accessToken2);
+  res
+    .cookie("jwt", null, {
+      //maxAge = number of milliseconds in a time period
+      maxAge: 60 * 60 * 1000, // 3600000
+      httpOnly: true,
+      sameSite: "strict",
+      // secure: true, //we activate it in production
+    })
+    .json({ message: "User logged out successfully" });
 });
 
 exports.dashboard = asyncHandler(async (req, res, next) => {
@@ -87,6 +116,6 @@ exports.dashboard = asyncHandler(async (req, res, next) => {
     const accessToken = user.generateAccessToken();
     res.status(200).json("Hello There... New Access Token Issued");
   } catch (ex) {
-    res.status(400).send("Something went wrong");
+    res.status(400).json("Something went wrong");
   }
 });
