@@ -1,22 +1,100 @@
+@font-face {
+  font-family: IBM;
+  src: url(../assets/IBMPlexSerif-Regular.ttf);
+}
+
 .chat-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   font-size: 2rem;
+  font-family: IBM;
+  height: 100%;
+  padding: 5px;
+  background-color: #f0f2f5;
 }
 
 .recipient-info {
   display: grid;
-  grid-template-columns: minmax(50px, 100px) minmax(300px, 1fr);
+  grid-template-columns: minmax(100px, 150px) minmax(300px, 1fr);
   gap: 20px;
-  background-color: #f0f2f5;
+
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 2px solid black;
+}
+
+.user-photo {
+  padding-left: 20px;
+}
+
+.user-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  border-left: #15c757 solid 20px;
 }
 
 .chat-content {
   background-color: #f1ede6;
+  height: 90%;
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+.message-input {
+  position: absolute;
+  bottom: 10%;
+  left: 0;
+  right: 0;
+  margin-top: auto;
 }
 
-.message-input {
-  background-color: #f0f2f5;
+.message-form {
+  display: flex;
+  justify-content: center;
+  max-height: 100px;
+  align-items: center;
+  gap: 20px;
+}
+
+textarea {
+  border-radius: 20px;
+  padding: 20px;
+  font-size: 1.4rem;
+  border: none;
+  max-width: 600px;
+}
+
+.send-button {
+  border-radius: 20px;
+  font-size: 1.8rem;
+  background-color: #ec3b41;
+  color: white;
+  width: 150px;
+  height: 50px;
+  border: none;
+}
+
+.messages {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(1, auto);
+  padding: 10px;
+}
+
+.author {
+  grid-column: 2/3;
+  background-color: #15c757;
+  color: white;
+  border-radius: 40px;
+  padding: 10px;
+}
+
+.recipient {
+  grid-column: 1/2;
+  background-color: #53bdeb;
+  color: white;
+  border-radius: 40px;
+  padding: 10px;
 }
