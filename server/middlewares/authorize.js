@@ -5,24 +5,23 @@ const User = require("../models/User");
 const authorize = asyncHandler(async (req, res, next) => {
   let token;
 
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
+  if (req.cookies.jwt === null) {
+    return res.status(400).json({ message: "Invalid access token" });
+  } else {
     try {
       //Get token from header
-      token = req.headers.authorization.split(" ")[1];
+      token = req.cookies.jwt;
       const decoded = jwt.verify(token, process.env.ACCESS_KEY);
+      if (!token) return res.status(401).json("Not Authorized!");
 
       //Get the user from the token
       req.user = decoded;
       next();
     } catch (err) {
-      res.status(401).json(err);
+      console.log(err);
+      return res.status(401).json(err);
     }
   }
-
-  if (!token) res.status(401).json("Not Authorized!");
 });
 
 module.exports = authorize;
