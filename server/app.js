@@ -8,10 +8,11 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const passport = require("passport");
+const helmet = require("helmet");
 require("./middlewares/passport-config")(passport);
 
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
+const morgan = require("morgan");
 
 const app = express();
 
@@ -24,23 +25,17 @@ db.once("open", () => console.log("Connected To Mongoose"));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
+app.use(morgan("common"));
+app.use(helmet());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
-app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(function (req, res, next) {
-  res.locals.currentUser = req.user;
-  next();
-});
-
 app.use("/api", indexRouter);
-app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
