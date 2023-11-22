@@ -67,10 +67,18 @@ exports.sign_up = asyncHandler(async (req, res, next) => {
     user.password = await bcrypt.hash(user.password, saltForPassword);
     await user.save();
 
-    res.status(200).json({
-      accessToken: accessToken,
-      userDetails: _.pick(user, ["_id", "email", "username", "isAdmin"]),
-    });
+    return res
+      .status(200)
+      .cookie("jwt", accessToken, {
+        //maxAge = number of milliseconds in a time period
+        maxAge: 60 * 60 * 1000, // 3600000
+        httpOnly: true,
+        sameSite: "strict",
+        // secure: true, //we activate it in production
+      })
+      .json({
+        userDetails: _.pick(user, ["_id", "email", "username", "isAdmin"]),
+      });
   }
 });
 
