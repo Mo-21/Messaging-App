@@ -1,5 +1,4 @@
 import { FormEvent, useState } from "react";
-import "./register.css";
 import logo from "./logo-icon.svg";
 import { useNavigate } from "react-router-dom";
 
