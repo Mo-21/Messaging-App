@@ -1,10 +1,10 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "/api",
 });
 
-class ClientAPI<T> {
+class ClientAPI<T, R> {
   endpoint: string;
 
   constructor(endpoint: string) {
@@ -13,7 +13,7 @@ class ClientAPI<T> {
 
   login = (data: T) => {
     //post request
-    return axiosInstance.post<T>(this.endpoint, data).then((res) => res.data);
+    return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
   };
 }
 
