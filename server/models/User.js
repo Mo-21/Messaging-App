@@ -83,7 +83,7 @@ userSchema.methods.generateAccessToken = function () {
     { _id: this._id, isAdmin: this.isAdmin },
     process.env.ACCESS_KEY,
     {
-      expiresIn: "15m",
+      expiresIn: "4h",
     }
   );
   return token;

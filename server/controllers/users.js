@@ -31,7 +31,6 @@ exports.sign_in = asyncHandler(async (req, res, next) => {
         message: "Incorrect Password, please try again",
       });
     }
-    console.log("password done");
     //generating json web token
     const accessToken = user.generateAccessToken();
 
@@ -45,7 +44,10 @@ exports.sign_in = asyncHandler(async (req, res, next) => {
         // secure: true, //we activate it in production
       })
       .json({
-        userDetails: _.pick(user, ["_id", "email", "username", "isAdmin"]),
+        _id: user._id,
+        email: user.email,
+        username: user.username,
+        isAdmin: user.isAdmin,
       });
   }
 });
