@@ -10,11 +10,30 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const helmet = require("helmet");
 require("./middlewares/passport-config")(passport);
+const app = express();
+http = require("http");
+const { Server } = require("socket.io");
+const cors = require("cors");
+app.use(cors());
 
 const indexRouter = require("./routes/index");
 const morgan = require("morgan");
 
-const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log(`User connected ${socket.id}`);
+
+  socket.on("send_message", (data) => {
+    socket.broadcast.emit("receive_message", data);
+  });
+});
 
 mongoose.connect(process.env.DATABASE_URL);
 const db = mongoose.connection;
@@ -53,4 +72,7 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
+server.listen(3000, () => {
+  console.log("SERVER RUNNING");
+});
 module.exports = app;
