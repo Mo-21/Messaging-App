@@ -1,11 +1,15 @@
-import logo from "../src/assets/logo-icon.svg";
-import "../src/styles/login.css";
-import ClientAPI from "./react-query/services/api-client";
+/* eslint-disable react-refresh/only-export-components */
+import logo from "../assets/logo-icon.svg";
+import "../styles/login.css";
+import ClientAPI from "../react-query/services/api-client";
 import {
   LoginCredentialsResponse,
   LoginCredentials,
-} from "./reducers/userDetails-reducer";
-import useAuth from "./hooks/useAuth";
+} from "./UserDetailsProvider";
+import { useContext } from "react";
+import userDetailsContext from "./userDetails-context";
+
+export const useAuth = () => useContext(userDetailsContext);
 
 export default function Login() {
   const { state, dispatch } = useAuth();

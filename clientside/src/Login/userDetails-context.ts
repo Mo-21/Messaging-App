@@ -1,7 +1,4 @@
-import {
-  LoginAction,
-  LoginCredentialsResponse,
-} from "../reducers/userDetails-reducer";
+import { LoginAction, LoginCredentialsResponse } from "./UserDetailsProvider";
 import React, { Dispatch } from "react";
 
 interface UserContextType {

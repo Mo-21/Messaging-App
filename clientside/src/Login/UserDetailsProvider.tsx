@@ -1,3 +1,6 @@
+import { ReactNode, useReducer } from "react";
+import userDetailsContext from "./userDetails-context";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface LoginCredentialsResponse {
   userDetails: {
@@ -34,4 +37,29 @@ const userDetailsReducer = (state: any, action: LoginAction) => {
   return state;
 };
 
-export default userDetailsReducer;
+const initialState = {
+  userDetails: {
+    email: null,
+    isAdmin: null,
+    username: null,
+    _id: null,
+  },
+  credentials: {
+    email: "",
+    password: "",
+  },
+};
+
+interface Prop {
+  children: ReactNode;
+}
+
+export const UserDetailsProvider = ({ children }: Prop) => {
+  const [state, dispatch] = useReducer(userDetailsReducer, initialState);
+
+  return (
+    <userDetailsContext.Provider value={{ state, dispatch }}>
+      {children}
+    </userDetailsContext.Provider>
+  );
+};
