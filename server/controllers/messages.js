@@ -9,7 +9,35 @@ const {
 const { User } = require("../models/User");
 const e = require("express");
 
-exports.get_dashboard = asyncHandler(async (req, res) => {});
+exports.get_dashboard = asyncHandler(async (req, res) => {
+  try {
+    const messages = await Message.find({
+      $or: [{ recipient: req.user._id }, { author: req.user._id }],
+    }).populate("author recipient", "username _id");
+
+    if (!messages) return res.status(404).json("No Messages");
+
+    const chatPartners = new Map();
+
+    messages.forEach((message) => {
+      if (message.recipient._id.toString() === req.user._id.toString()) {
+        chatPartners.set(message.author._id.toString(), {
+          id: message.author._id.toString(),
+          username: message.author.username,
+        });
+      } else if (message.author._id.toString() === req.user._id.toString()) {
+        chatPartners.set(message.recipient._id.toString(), {
+          id: message.recipient._id.toString(),
+          username: message.recipient.username,
+        });
+      }
+    });
+
+    return res.json(Array.from(chatPartners.values()));
+  } catch (error) {
+    throw new Error(error);
+  }
+});
 
 exports.get_chat = asyncHandler(async (req, res) => {
   try {
