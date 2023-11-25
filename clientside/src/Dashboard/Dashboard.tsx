@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom";
 import "./Dashboard.css";
 import { ChatPartner, useChatPartners } from "./useChatPartners";
 
@@ -6,7 +7,7 @@ export default function Dashboard() {
 
   if (error) return <h1>Something went wrong</h1>;
   if (isLoading) return <h1>Loading...</h1>;
-  
+
   return (
     <div className="dashboard">
       <div className="contact-list">
@@ -18,7 +19,7 @@ export default function Dashboard() {
         ))}
       </div>
       <div className=" empty-space">
-        Select a chat to start chatting<div>As simple as that</div>
+        <Outlet />
       </div>
     </div>
   );
