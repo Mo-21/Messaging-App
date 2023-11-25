@@ -6,10 +6,8 @@ import {
   LoginCredentialsResponse,
   LoginCredentials,
 } from "./UserDetailsProvider";
-import { useContext } from "react";
-import userDetailsContext from "./userDetails-context";
+import { useAuth } from "../useAuth";
 
-export const useAuth = () => useContext(userDetailsContext);
 
 export default function Login() {
   const { state, dispatch } = useAuth();

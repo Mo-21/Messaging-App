@@ -27,13 +27,18 @@ interface SetCredentials {
   payload: LoginCredentials;
 }
 
-export type LoginAction = SetUserDetails | SetCredentials;
+interface Logout {
+  type: "LOGOUT";
+}
+
+export type LoginAction = SetUserDetails | SetCredentials | Logout;
 
 const userDetailsReducer = (state: any, action: LoginAction) => {
   if (action.type === "SET_CREDENTIALS")
     return { ...state, credentials: action.payload };
   if (action.type === "SET_USER_DETAILS")
     return { ...state, userDetails: action.payload };
+  if (action.type === "LOGOUT") return initialState;
   return state;
 };
 
