@@ -2,47 +2,40 @@
 import { FormEvent, useEffect, useState } from "react";
 import "./Chat.css";
 import { useParams } from "react-router-dom";
+import io from "socket.io-client";
+
+const socket = io.connect("http://localhost:3000");
 
 export default function Chat() {
   const [content, setMessageSent] = useState("");
   const [allMessages, setAllMessages] = useState<any>();
+
+  // console.log("Current username:", username);
   const recipientId = useParams();
 
   useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const response = await fetch(`/api/chat/${recipientId.id}`);
-        if (!response.ok) return console.log("Error");
+    socket.on("receive_message", (message: any) => {
+      console.log(message);
+      setAllMessages((prevMessages: any) => [...prevMessages, message]);
+    });
 
-        if (response.status !== 200) return console.log("Not Authorized");
-
-        const data = await response.json();
-        setAllMessages(data);
-      } catch (err) {
-        console.error(err);
-      }
+    return () => {
+      socket.off("message");
     };
-    fetchMessages();
   }, []);
 
   const handleMessage = async (e: FormEvent) => {
     e.preventDefault();
     setMessageSent("");
-    try {
-      const response = await fetch(`/api/chat/${recipientId.id}/send`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ content }),
-      });
 
-      console.log(response);
-      if (!response.ok) return console.log("Something went wrong");
-      if (response.status !== 200) return console.log("It got rejected");
-      const message = await response.json();
-      console.log(message);
-      setAllMessages([...data, message]);
+    try {
+      // console.log(username);
+      const newMessage = {
+        content: content,
+        recipientId: recipientId.id,
+      };
+      console.log(newMessage);
+      socket.emit("send_message", newMessage);
     } catch (err) {
       console.error(err);
     }
@@ -86,7 +79,6 @@ export default function Chat() {
           </form>
         </div>
       </div>
-      //{" "}
     </div>
   );
 }
@@ -105,3 +97,37 @@ export default function Chat() {
 //       recipient: "655bb4f4d6dc9df561758c33",
 //     },
 //   ];
+
+// try {
+//   const response = await fetch(`/api/chat/${recipientId.id}/send`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({ content }),
+//   });
+
+//   console.log(response);
+//   if (!response.ok) return console.log("Something went wrong");
+//   if (response.status !== 200) return console.log("It got rejected");
+//   const message = await response.json();
+//   console.log(message);
+//   setAllMessages([...data, message]);
+// } catch (err) {
+//   console.error(err);
+// }
+
+//fetching from db
+// const fetchMessages = async () => {
+//   try {
+//     const response = await fetch(`/api/chat/${recipientId.id}`);
+//     if (!response.ok) return console.log("Error");
+
+//     if (response.status !== 200) return console.log("Not Authorized");
+//     const data = await response.json();
+//     setAllMessages(data);
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
+// fetchMessages();

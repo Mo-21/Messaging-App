@@ -3,7 +3,7 @@ import "./login.css";
 import logo from "./logo-icon.svg";
 import { useNavigate } from "react-router-dom";
 
-export default function Login({ setUsername }) {
+export default function Login({ setUsername, setUserId }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState<string | null>(null);
@@ -34,12 +34,12 @@ export default function Login({ setUsername }) {
         setError("Invalid Credentials");
       }
       const data = await response.json();
-      console.log(data.userDetails.username);
+      console.log(data.userDetails._id);
+      setUserId(data.userDetails._id);
       setUsername(data.userDetails.username);
       if (response.status !== 200) {
         setError("Unauthorized");
       } else {
-        console.log(data);
         navigate("/"); // Redirect to dashboard on successful login
       }
     } catch (err) {

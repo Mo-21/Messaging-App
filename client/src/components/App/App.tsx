@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Register from "../Register/Register";
 import { useState } from "react";
 import Logout from "../Logout/Logout";
+import { AuthProvider, useAuth } from "../Context/context";
 
 interface NavbarProps {
   username: string | null;
@@ -24,19 +25,22 @@ export function Navbar({ username, setUsername }: NavbarProps) {
 
 function App() {
   const [username, setUsername] = useState<string | null>(null);
+
   return (
     <Router>
-      <Navbar setUsername={setUsername} username={username} />
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/login" element={<Login setUsername={setUsername} />} />
-        <Route
-          path="/register"
-          element={<Register setUsername={setUsername} />}
-        />
-        <Route path="/chat/:id" element={<Chat />} />
-        <Route path="/logout" />
-      </Routes>
+      <AuthProvider>
+        <Navbar setUsername={setUsername} username={username} />
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/login" element={<Login setUsername={setUsername} />} />
+          <Route
+            path="/register"
+            element={<Register setUsername={setUsername} />}
+          />
+          <Route path="/chat/:id" element={<Chat />} />
+          <Route path="/logout" />
+        </Routes>
+      </AuthProvider>
     </Router>
   );
 }
