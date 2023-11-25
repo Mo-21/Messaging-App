@@ -46,7 +46,9 @@ exports.get_chat = asyncHandler(async (req, res) => {
         { author: req.params.id, recipient: req.user._id },
         { author: req.user._id, recipient: req.params.id },
       ],
-    }).sort({ date: 1 });
+    })
+      .populate("author recipient", "username _id")
+      .sort({ date: 1 });
 
     if (!messages) res.status(404).json("No Messages");
 
