@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import logo from "../assets/logo-icon.svg";
-import "../styles/login.css";
+import "./Login.css";
 import ClientAPI from "../react-query/services/api-client";
 import {
   LoginCredentialsResponse,
