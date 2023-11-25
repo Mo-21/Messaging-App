@@ -1,29 +1,27 @@
 // import { io } from "socket.io-client";
+import { useParams } from "react-router-dom";
 import "./Chat.css";
 import { Message, useChatHistory } from "./useChatHistory";
-
 // const socket = io.connect("http://localhost:3000");
 
 function Chat() {
-  //To be extracted from the URL and used to fetch the chat history later on
-  //   const userId = useParams();
+  const userId = useParams<{ id: string }>();
 
-  const userId: string = "655bb4f4d6dc9df561758c33";
-  const { data: chatHistory, isLoading, isError } = useChatHistory(userId);
+  const {
+    data: chatHistory,
+    isLoading,
+    isError,
+  } = useChatHistory(userId.id ? userId.id : "");
 
   if (isError) return <div>{isError}</div>;
   if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="chat-container">
-      <div className="recipient-info">
-        <div className="user-photo">user-photo</div>
-        <div className="user-name">Wizard</div>
-      </div>
       <div className="chat-content">
         {chatHistory?.map((message: Message, index: number) => (
           <div key={index} className="messages">
-            {`${userId}` == message.author ? (
+            {`${userId.id}` == message.author._id ? (
               <div className="recipient">{message.content}</div>
             ) : (
               <div className="author">{message.content}</div>

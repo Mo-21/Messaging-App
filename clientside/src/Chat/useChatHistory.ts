@@ -4,8 +4,14 @@ import ClientAPI from "../react-query/services/api-client";
 export interface Message {
   id: string;
   content: string;
-  author: string;
-  recipient: string;
+  author: {
+    _id: string;
+    username: string;
+  };
+  recipient: {
+    _id: string;
+    username: string;
+  };
   date: string;
 }
 
