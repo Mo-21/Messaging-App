@@ -12,8 +12,15 @@ class ClientAPI<T, R> {
   }
 
   login = (data: T) => {
-    //post request
     return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
+  };
+
+  getChatPartners = () => {
+    return axiosInstance.get<T>(this.endpoint).then((res) => res.data);
+  };
+
+  logout = () => {
+    return axiosInstance.get(this.endpoint).then((res) => res.data);
   };
 }
 
