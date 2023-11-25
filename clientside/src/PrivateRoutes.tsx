@@ -1,11 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "./useAuth";
+import { userDetailsFromStorage } from "./getFromStorage";
 
 export default function PrivateRoutes() {
-  const { state } = useAuth();
+  const user = userDetailsFromStorage();
 
-  const _id = state.userDetails._id || undefined;
-
-  if (!_id) return <Navigate to={"/login"} />;
+  console.log(user);
+  if (!user) return <Navigate to={"/login"} />;
   return <Outlet />;
 }

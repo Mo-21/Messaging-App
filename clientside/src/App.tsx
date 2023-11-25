@@ -4,6 +4,7 @@ import { UserDetailsProvider } from "./Login/UserDetailsProvider";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "./useAuth";
 import Logout from "./Logout/Logout";
+import { userDetailsFromStorage } from "./getFromStorage";
 
 function Navbar() {
   const { state } = useAuth();
@@ -19,17 +20,21 @@ function Navbar() {
 
 function App() {
   const navigate = useNavigate();
-  const { state } = useAuth();
 
-  const _id = state?.userDetails._id || undefined;
+  const user = userDetailsFromStorage();
+  if (user !== null) {
+    console.log(user);
+  } else {
+    console.log("null");
+  }
 
   useEffect(() => {
-    if (_id) {
+    if (user !== null) {
       navigate("/dashboard");
     } else {
       navigate("/login");
     }
-  }, [_id, navigate]);
+  }, [navigate, user]);
 
   return (
     <UserDetailsProvider>
