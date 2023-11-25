@@ -15,6 +15,10 @@ class ClientAPI<T, R> {
     return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
   };
 
+  register = (data: T) => {
+    return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
+  };
+
   getChatPartners = () => {
     return axiosInstance.get<T>(this.endpoint).then((res) => res.data);
   };
