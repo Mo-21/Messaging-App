@@ -9,7 +9,6 @@ export interface LoginCredentialsResponse {
     username: string;
     _id: string;
   };
-  credentials: LoginCredentials;
 }
 
 export interface LoginCredentials {
@@ -17,28 +16,39 @@ export interface LoginCredentials {
   password: string;
 }
 
+export interface RegistrationCredentials {
+  username: string;
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+}
+
 interface SetUserDetails {
   type: "SET_USER_DETAILS";
   payload: LoginCredentialsResponse;
 }
 
-interface SetCredentials {
-  type: "SET_CREDENTIALS";
-  payload: LoginCredentials;
+interface SetCredentialsForRegistration {
+  type: "SET_CREDENTIALS_REGISTRATION";
+  payload: RegistrationCredentials;
 }
 
 interface Logout {
   type: "LOGOUT";
 }
 
-export type LoginAction = SetUserDetails | SetCredentials | Logout;
+export type LoginAction =
+  | SetUserDetails
+  | Logout
+  | SetCredentialsForRegistration;
 
 const userDetailsReducer = (state: any, action: LoginAction) => {
-  if (action.type === "SET_CREDENTIALS")
-    return { ...state, credentials: action.payload };
   if (action.type === "SET_USER_DETAILS")
     return { ...state, userDetails: action.payload };
+  if (action.type === "SET_CREDENTIALS_REGISTRATION")
+    return { ...state, userDetails: action.payload };
   if (action.type === "LOGOUT") return initialState;
+
   return state;
 };
 
