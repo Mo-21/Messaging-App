@@ -1,12 +1,11 @@
 import "./App.css";
-import Login from "./Login";
-import { UserDetailsProvider } from "./UserDetailsProvider";
-import useAuth from "./hooks/useAuth";
+import Login from "./Login/Login";
+import { UserDetailsProvider } from "./Login/UserDetailsProvider";
+import { useAuth } from "./Login/Login";
 
 function Navbar() {
   const { state } = useAuth();
 
-  console.log(state.userDetails.username);
   const username = state.userDetails.username || "";
 
   return (
