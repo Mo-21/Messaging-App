@@ -15,6 +15,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        path: "",
         element: <PrivateRoutes />,
         children: [
           {
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
             element: <Dashboard />,
             children: [
               {
-                path: "chat/:id",
+                path: "dashboard/chat/:id",
                 element: <Chat />,
               },
             ],
