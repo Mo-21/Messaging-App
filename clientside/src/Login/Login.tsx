@@ -24,6 +24,12 @@ export default function Login() {
     "/login"
   );
 
+  console.log(userDetails)
+  if (userDetails._id !== null) {
+    console.log(userDetails);
+    localStorage.setItem("userDetails", JSON.stringify(userDetails));
+    navigate("/dashboard");
+  }
   return (
     <div className="login-container">
       <div className="second-login-container">
@@ -50,9 +56,6 @@ export default function Login() {
                 type: "SET_USER_DETAILS",
                 payload: await Client.login(credentials),
               });
-              if (userDetails) {
-                navigate("/dashboard");
-              }
             }}
           >
             <div className="email-field">

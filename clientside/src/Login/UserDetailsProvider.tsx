@@ -1,5 +1,6 @@
 import { ReactNode, useReducer } from "react";
 import userDetailsContext from "./userDetails-context";
+import { userDetailsFromStorage } from "../getFromStorage";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface LoginCredentialsResponse {
@@ -47,22 +48,24 @@ const userDetailsReducer = (state: any, action: LoginAction) => {
     return { ...state, userDetails: action.payload };
   if (action.type === "SET_CREDENTIALS_REGISTRATION")
     return { ...state, userDetails: action.payload };
-  if (action.type === "LOGOUT") return initialState;
-
+  if (action.type === "LOGOUT") {
+    localStorage.removeItem("userDetails");
+    return initialState;
+  }
   return state;
 };
 
+const currentUser = userDetailsFromStorage();
+console.log(currentUser);
 const initialState = {
-  userDetails: {
-    email: null,
-    isAdmin: null,
-    username: null,
-    _id: null,
-  },
-  credentials: {
-    email: "",
-    password: "",
-  },
+  userDetails: currentUser
+    ? JSON.parse(currentUser)
+    : {
+        email: null,
+        isAdmin: null,
+        username: null,
+        _id: null,
+      },
 };
 
 interface Prop {
