@@ -4,6 +4,7 @@ import { UserDetailsProvider } from "./Login/UserDetailsProvider";
 import { useAuth } from "./Login/Login";
 import Dashboard from "./Dashboard/Dashboard";
 import Logout from "./Logout/Logout";
+import Chat from "./Chat/Chat";
 
 function Navbar() {
   const { state } = useAuth();
@@ -23,7 +24,7 @@ function App() {
   return (
     <UserDetailsProvider>
       <Navbar />
-      <Dashboard />
+      <Chat />
     </UserDetailsProvider>
   );
 }
