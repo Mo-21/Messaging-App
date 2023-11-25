@@ -7,14 +7,19 @@ import {
   LoginCredentials,
 } from "./UserDetailsProvider";
 import { useAuth } from "../useAuth";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function Login() {
   const { state, dispatch } = useAuth();
+  const navigate = useNavigate();
 
-  const { userDetails, credentials } = state;
+  const { userDetails } = state;
+  const [credentials, setCredentials] = useState<LoginCredentials>({
+    email: "",
+    password: "",
+  });
 
-  console.log(userDetails);
   const Client = new ClientAPI<LoginCredentials, LoginCredentialsResponse>(
     "/login"
   );
@@ -45,16 +50,19 @@ export default function Login() {
                 type: "SET_USER_DETAILS",
                 payload: await Client.login(credentials),
               });
+              if (userDetails) {
+                navigate("/dashboard");
+              }
             }}
           >
             <div className="email-field">
               <label htmlFor="email">Email</label>
               <input
                 onChange={(event) =>
-                  dispatch({
-                    type: "SET_CREDENTIALS",
-                    payload: { ...credentials, email: event.target.value },
-                  })
+                  setCredentials((prevCredentials) => ({
+                    ...prevCredentials,
+                    email: event.target.value,
+                  }))
                 }
                 value={credentials.email}
                 type="email"
@@ -66,10 +74,10 @@ export default function Login() {
               <input
                 value={credentials.password}
                 onChange={(event) =>
-                  dispatch({
-                    type: "SET_CREDENTIALS",
-                    payload: { ...credentials, password: event.target.value },
-                  })
+                  setCredentials((prevCredentials) => ({
+                    ...prevCredentials,
+                    password: event.target.value,
+                  }))
                 }
                 type="password"
                 required
@@ -81,9 +89,9 @@ export default function Login() {
           </form>
           <div className="register-banner">
             Don't Have An Account?
-            <a className="register-link" href="#">
+            <Link to={"/register"} className="register-link">
               Sign Up!
-            </a>
+            </Link>
           </div>
         </div>
       </div>
