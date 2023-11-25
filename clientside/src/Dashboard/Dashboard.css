@@ -25,15 +25,10 @@
   align-items: center;
 }
 
-.empty-space div {
-  font-style: italic;
-  opacity: 0.4;
-}
-
 .contact-list {
   grid-column: 1/2;
   background-color: white;
-  border-right: 2px solid white;
+  border-right: 2px solid black;
 }
 
 .contact-list-title {
@@ -43,9 +38,12 @@
   min-height: 70px;
 }
 
-div.contact {
+.contact {
   display: flex;
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #f0f2f5;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
 }
