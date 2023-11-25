@@ -13,38 +13,24 @@
   background-color: #f0f2f5;
 }
 
-.recipient-info {
-  display: grid;
-  grid-template-columns: minmax(100px, 150px) minmax(300px, 1fr);
-  gap: 20px;
-
-  width: 100%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border: 2px solid black;
-}
-
-.user-photo {
-  padding-left: 20px;
-}
-
 .user-name {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 4rem;
+  font-size: 3rem;
   border-left: #15c757 solid 20px;
 }
 
 .chat-content {
   background-color: #f1ede6;
-  height: 90%;
+  height: 100%;
   width: 100%;
   text-align: center;
   position: relative;
 }
 .message-input {
   position: absolute;
-  bottom: 10%;
+  bottom: 5%;
   left: 0;
   right: 0;
   margin-top: auto;
