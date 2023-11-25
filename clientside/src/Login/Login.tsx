@@ -24,9 +24,7 @@ export default function Login() {
     "/login"
   );
 
-  console.log(userDetails)
   if (userDetails._id !== null) {
-    console.log(userDetails);
     localStorage.setItem("userDetails", JSON.stringify(userDetails));
     navigate("/dashboard");
   }
