@@ -14,9 +14,8 @@ export default function Logout() {
     try {
       await Client.logout();
       queryClient.clear(); // Clear the cache
-      window.location.reload();
       dispatch({ type: "LOGOUT" });
-      navigate("/login")
+      navigate("/login");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       throw new Error(err.response.data.message);
