@@ -5,7 +5,13 @@ const asyncHandler = require("express-async-handler");
 const { User } = require("../models/User");
 
 const opts = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  jwtFromRequest: function (req) {
+    let token = null;
+    if (req && req.cookies) {
+      token = req.cookies["jwt"];
+    }
+    return token;
+  },
   secretOrKey: process.env.ACCESS_KEY,
 };
 
