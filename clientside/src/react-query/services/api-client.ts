@@ -22,6 +22,10 @@ class ClientAPI<T, R> {
   logout = () => {
     return axiosInstance.get(this.endpoint).then((res) => res.data);
   };
+
+  getChatHistory = () => {
+    return axiosInstance.get(this.endpoint).then((res) => res.data);
+  };
 }
 
 export default ClientAPI;
