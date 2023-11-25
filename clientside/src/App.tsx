@@ -1,9 +1,21 @@
 import { useEffect } from "react";
 import "./App.css";
-import Login from "./Login/Login";
 import { UserDetailsProvider } from "./Login/UserDetailsProvider";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "./useAuth";
+import Logout from "./Logout/Logout";
+
+function Navbar() {
+  const { state } = useAuth();
+
+  return (
+    <div className="navbar">
+      <div className="username">{state?.userDetails.username}</div>
+      <div className="brand">Send</div>
+      {state?.userDetails.username ? <Logout /> : ""}
+    </div>
+  );
+}
 
 function App() {
   const navigate = useNavigate();
@@ -21,7 +33,8 @@ function App() {
 
   return (
     <UserDetailsProvider>
-      <Login />
+      <Navbar />
+      <Outlet />
     </UserDetailsProvider>
   );
 }
