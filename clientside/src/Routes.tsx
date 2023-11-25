@@ -6,6 +6,7 @@ import Dashboard from "./Dashboard/Dashboard";
 import Chat from "./Chat/Chat";
 import Logout from "./Logout/Logout";
 import App from "./App";
+import Register from "./Registration/Register";
 
 const router = createBrowserRouter([
   {
@@ -14,11 +15,10 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "dashboard",
         element: <PrivateRoutes />,
         children: [
           {
-            path: "",
+            path: "dashboard",
             element: <Dashboard />,
             children: [
               {
@@ -38,6 +38,10 @@ const router = createBrowserRouter([
         element: <Login />,
       },
     ],
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
 ]);
 
