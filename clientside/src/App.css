@@ -36,3 +36,14 @@ body {
   align-self: center;
   margin-left: 10px;
 }
+
+.logout-btn {
+  display: flex;
+  justify-content: center;
+  font-family: var(--logo-font);
+  background: none;
+  font-size: 3rem;
+  letter-spacing: 2px;
+  border: none;
+  align-self: center;
+}

@@ -21,7 +21,7 @@ export default function Logout() {
   };
 
   return (
-    <button onClick={handleLogout} className="btn btn-warning mx-2">
+    <button onClick={handleLogout} className="logout-btn">
       Logout
     </button>
   );
