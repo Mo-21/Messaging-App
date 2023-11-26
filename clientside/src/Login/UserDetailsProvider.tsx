@@ -59,7 +59,7 @@ const currentUser = userDetailsFromStorage();
 console.log(currentUser);
 const initialState = {
   userDetails: currentUser
-    ? JSON.parse(currentUser)
+    ? currentUser
     : {
         email: null,
         isAdmin: null,
