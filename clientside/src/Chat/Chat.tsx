@@ -1,11 +1,9 @@
-// import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";
 import "./Chat.css";
 import { Message, useChatHistory } from "./useChatHistory";
 import { useRef } from "react";
 import { userDetailsFromStorage } from "../getFromStorage";
 import useAddMessage from "./useAddMessage";
-// const socket = io.connect("http://localhost:3000");
 
 function Chat() {
   const userId = useParams<{ id: string }>();
