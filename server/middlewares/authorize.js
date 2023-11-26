@@ -13,7 +13,6 @@ const authorize = asyncHandler(async (req, res, next) => {
       token = req.cookies.jwt;
       const decoded = jwt.verify(token, process.env.ACCESS_KEY);
       if (!token) return res.status(401).json("Not Authorized!");
-
       //Get the user from the token
       req.user = decoded;
       next();
