@@ -3,14 +3,13 @@
   src: url(../assets/IBMPlexSerif-Regular.ttf);
 }
 
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  font-size: 2rem;
-  font-family: IBM;
-  height: 100%;
-  padding: 5px;
-  background-color: #f0f2f5;
+.chat-content {
+  background-color: #f1ede6;
+  max-height: 90vh; /* Adjust this value as needed */
+  width: 100%;
+  text-align: center;
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden;
 }
 
 .user-name {
@@ -26,14 +25,12 @@
   height: 100%;
   width: 100%;
   text-align: center;
-  position: relative;
 }
 .message-input {
-  position: absolute;
-  bottom: 5%;
-  left: 0;
-  right: 0;
-  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 }
 
 .message-form {
@@ -45,6 +42,8 @@
 }
 
 textarea {
+  flex-grow: 1;
+  margin-right: 10px;
   border-radius: 20px;
   padding: 20px;
   font-size: 1.4rem;
