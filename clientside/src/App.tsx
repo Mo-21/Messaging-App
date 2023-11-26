@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { UserDetailsProvider } from "./Login/UserDetailsProvider";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -20,13 +20,9 @@ function Navbar() {
 
 function App() {
   const navigate = useNavigate();
+  const [user] = useState(() => userDetailsFromStorage());
 
-  const user = userDetailsFromStorage();
-  if (user !== null) {
-    console.log(user);
-  } else {
-    console.log("null");
-  }
+  console.log(user);
 
   useEffect(() => {
     if (user !== null) {
