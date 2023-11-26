@@ -30,6 +30,10 @@ class ClientAPI<T, R> {
   getChatHistory = () => {
     return axiosInstance.get(this.endpoint).then((res) => res.data);
   };
+
+  sendMessage = (data: T) => {
+    return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
+  };
 }
 
 export default ClientAPI;
