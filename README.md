@@ -2,8 +2,8 @@
 
 This application is a real-time messaging platform. It is built with Node.js, which provides the runtime environment, and Express, a popular Node.js framework, to set up the server. MongoDB is used as the database to store messages and user information. The frontend is built with React and React Query that manages the asynchronous data fetching. JWT (JSON Web Tokens) is implemented for user authentication, along with PassportJS for token authentication, ensuring secure access to the application.
 
-![sign-in-page](image.png)
-![main-page](image-1.png)
+![sign-in-page](./screenshots/image.png)
+![main-page](./screenshots/image-1.png)
 
 ## Features
 
