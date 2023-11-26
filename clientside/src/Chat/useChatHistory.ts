@@ -17,8 +17,9 @@ export interface Message {
 
 export const useChatHistory = (userId: string) => {
   return useQuery<Message[], Error>({
-    queryKey: ["chatHistory", userId],
+    queryKey: ["chatHistory"],
     queryFn: new ClientAPI<Message[], Message[]>(`/chat/${userId}`)
       .getChatHistory,
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 };
