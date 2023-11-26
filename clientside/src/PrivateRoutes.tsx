@@ -4,7 +4,6 @@ import { userDetailsFromStorage } from "./getFromStorage";
 export default function PrivateRoutes() {
   const user = userDetailsFromStorage();
 
-  console.log(user);
   if (!user) return <Navigate to={"/login"} />;
   return <Outlet />;
 }
