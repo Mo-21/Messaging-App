@@ -20,21 +20,7 @@ const indexRouter = require("./routes/index");
 const morgan = require("morgan");
 
 const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST"],
-  },
-});
-
-io.on("connection", (socket) => {
-  console.log(`User connected ${socket.id}`);
-
-  socket.on("send_message", (data) => {
-    socket.broadcast.emit("receive_message", data);
-  });
-});
-
+app.use(express.static("dist"));
 mongoose.connect(process.env.DATABASE_URL);
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));

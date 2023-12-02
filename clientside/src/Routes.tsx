@@ -47,23 +47,3 @@ const router = createBrowserRouter([
 ]);
 
 export default router;
-
-// {
-//     element: <PrivateRoutes />,
-//     children: [
-//       {
-//         path: "/dashboard",
-//         element: <Dashboard />,
-//         children: [
-//           {
-//             path: "chat/:id",
-//             element: <Chat />,
-//           },
-//         ],
-//       },
-//       {
-//         path: "/logout",
-//         element: <Logout />,
-//       },
-//     ],
-//   },
